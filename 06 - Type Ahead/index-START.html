@@ -21,26 +21,56 @@ const cities = [];
 
 fetch(endpoint)
   .then(blob => blob.json())
-  .then(data => { cities.push(...data)
-   })
+  .then(data => cities.push(...data)
+   )
 
 const searchBox = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
-console.log(cities)
+
 function findMatches(wordToMatch, cities) {
+  let regex = new RegExp(wordToMatch, 'gi');
   
-  // cities.filter(city => {
-    
-  // });
+  return cities.filter(place => {
+    return place.city.match(regex) || place.state.match(regex)
+  });
+
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function displayMatches() {
+  let matches = findMatches(this.value, cities)
 
+  let html = matches.map(place => {
+    // const listItem = document.createElement('li')
+    // const placeMatch = document.createElement('span')
+    // const placePopulation = document.createElement('span')
+
+    //   placeMatch.innerHTML = `${place.city}, ${place.state}`
+    //   placePopulation.innerHTML = `${place.population}`
+    // listItem.appendChild(placeMatch)
+    // listItem.appendChild(placePopulation)
+    // return listItem
+      const regex = new RegExp(this.value, 'gi');
+      const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+      const stateName= place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+
+      return `
+        <li>
+          <span class="name">${cityName}, ${place.state}</span>
+          <span class="population">${numberWithCommas(place.population)}</span>
+        </li>
+      `
+    }
+  ).join('')
+
+    suggestions.innerHTML = html;
 }
 
-searchBox.addEventListener('change', findMatches);
-suggestions.addEventListener('keyup', displayMatches);
-// console.log(searchBox);
+searchBox.addEventListener('change', displayMatches);
+searchBox.addEventListener('keyup', displayMatches);
 </script>
 </body>
 </html>
