@@ -96,6 +96,19 @@
   </div>
 
 <script>
+  document.addEventListener("click", (e) => console.log(e))
+  const checkboxes = document.querySelectorAll('.checkbox');
+
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', holdTheShift))
+
+  function holdTheShift(e) {
+    // console.log(e);
+    console.log(e.keyCode)
+    if (e.keyCode === 16) {
+      console.log('shift attack')
+    }
+  }
+
 </script>
 </body>
 </html>
