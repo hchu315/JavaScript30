@@ -33,19 +33,31 @@
     // 1. Filter the list of inventors for those who were born in the 1500's
       // console.log(inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600))
 
+    inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600)
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
       // console.log(inventors.map(inventor => [inventor.first, inventor.last] ))
 
+    inventors.map(inventor => `${inventor.first} ${inventor.last}`)
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
       // console.table(inventors.sort((inv1, inv2) => inv2.year -  inv1.year))
 
+    inventors.sort((inventor1, inventor2) => 
+      if (inventor1.year > inventor2) {
+        return 1
+      } else {
+        return -1
+      }
+      )
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
       // console.log(inventors.reduce((total, inv) => total + (inv.passed-inv.year), 0))
       // console.log(inventors.reduce((total, inv) => total + (inv.year)))
       // console.log()
+
+      inventors.reduce((acc, cv) => acc + (cv.passed - cv.year), 0)
 
     // 5. Sort the inventors by years lived
       console.table(inventors.sort((inv1, inv2) => (inv1.passed-inv1.year) - (inv2.passed-inv2.year)))
